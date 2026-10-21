@@ -22,7 +22,7 @@ Opening `index.html` straight from the disk (`file://`) will not work, because b
 
 Every push to `main` runs `.github/workflows/pages.yml`, which publishes the repo root to GitHub Pages. One-time setup: **Settings → Pages → Source → GitHub Actions**.
 
-Preview: https://growwithgm.github.io/grownest-site/
+Preview: https://growwithgm.github.io/grow-nest-website-/
 
 All asset paths are relative, so the same files work on the Pages preview and on grownest.pro. There is no `CNAME` file yet; the domain moves over separately.
 
