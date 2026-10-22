@@ -43,6 +43,7 @@ ICONS = {
     "chart": '<path d="M4 20V11M10 20V5M16 20v-6M2 20h20"/>',
     "lock": '<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
     "menu": '<path d="M4 7h16M4 12h16M4 17h16"/>',
+    "card": '<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/>',
 }
 
 def icon(name, cls=""):
@@ -52,7 +53,7 @@ def icon(name, cls=""):
 # ---------------------------------------------------------------- services
 SERVICES = [
     {"key": "google", "name": "Google Ads y Shopping", "short": "Google Ads", "url": "/agencia-google-ads/", "icon": "search", "card": "Tus productos en Google justo cuando alguien los busca."},
-    {"key": "shopify", "name": "Tiendas Shopify y B2B", "short": "Shopify", "url": "/agencia-shopify/", "icon": "bag", "card": "Tiendas rápidas y venta al por mayor desde la misma tienda."},
+    {"key": "shopify", "name": "Tiendas Shopify y B2B", "short": "Shopify", "url": "/agencia-shopify/", "icon": "bag", "card": "Tiendas rápidas, páginas optimizadas para convertir y venta B2B."},
     {"key": "whatsapp", "name": "WhatsApp marketing", "short": "WhatsApp marketing", "url": "/whatsapp-marketing/", "icon": "chat", "card": "Carritos recuperados y avisos de pedido que sí se leen."},
     {"key": "email", "name": "Email marketing con Klaviyo", "short": "Email marketing", "url": "/email-marketing-ecommerce/", "icon": "mail", "card": "Flujos que siguen vendiendo después del primer pedido."},
     {"key": "envios", "name": "Envíos y devoluciones", "short": "Envíos y devoluciones", "url": "/logistica-ecommerce/", "icon": "truck", "card": "Seguimiento diario y menos paquetes devueltos."},
@@ -134,7 +135,7 @@ def footer():
     <div class="foot-grid">
       <div>
         <img class="logo" src="/assets/img/logo-light.png" alt="Grow Nest. Where Digital Growth Takes Flight" width="180" height="97">
-        <p>Agencia de Facebook y Meta Ads para ecommerce. Campañas, tiendas, automatización y envíos en un solo equipo.</p>
+        <p>Agencia de performance marketing para ecommerce. De la web a las ventas: tienda, Meta Ads, Google Ads, optimización y envíos en un solo equipo.</p>
       </div>
       <div>
         <h2>Servicios</h2>
@@ -236,7 +237,7 @@ def card(s):
 ORG = {
     "@type": "Organization", "@id": BASE + "/#org", "name": "Grow Nest", "url": BASE + "/",
     "logo": BASE + "/assets/img/grownest-logo.png", "email": EMAIL, "telephone": "+447429917026",
-    "slogan": "Donde el crecimiento digital despega", "founder": {"@type": "Person", "name": "Ghulam Muhammad"},
+    "slogan": "Donde el crecimiento digital despega", "description": "Agencia de performance marketing para ecommerce: Meta Ads, Google Ads, Shopify, WhatsApp, email y envíos en un solo equipo.", "founder": {"@type": "Person", "name": "Ghulam Muhammad"},
     "address": {"@type": "PostalAddress", "streetAddress": "18 Albert Road", "addressLocality": "Ilford", "postalCode": "IG1 1HN", "addressCountry": "GB"},
     "areaServed": AREA, "knowsLanguage": ["es", "en"],
     "contactPoint": {"@type": "ContactPoint", "contactType": "sales", "telephone": "+447429917026", "email": EMAIL, "availableLanguage": ["es", "en"]},
@@ -261,6 +262,7 @@ def jsonld(p):
 # ---------------------------------------------------------------- home
 HOME_FAQ = [
     ("¿Qué hace una agencia de Facebook Ads?", "Planifica, crea y optimiza tus anuncios de Facebook e Instagram para vender más con el mismo presupuesto. En Grow Nest también configuramos la medición, el catálogo y las creatividades."),
+    ("¿Solo gestionáis los anuncios?", "No. Nos encargamos de todo, de la web a las ventas: creamos o mejoramos tu tienda, lanzamos Meta Ads y Google Ads, optimizamos las páginas, configuramos la medición y cuidamos los mensajes y los envíos."),
     ("¿Facebook Ads y Meta Ads son lo mismo?", "Sí. Meta Ads es el nombre actual de la plataforma que publica tus anuncios en Facebook, Instagram, Messenger y el resto de apps de Meta."),
     ("¿Cuánto cuesta anunciarse en Facebook e Instagram?", "Meta no tiene una tarifa fija. Tú decides el presupuesto diario y Meta cobra por impresiones o clics. En la auditoría te recomendamos un presupuesto según tu margen y tus objetivos."),
     ("¿Cuánto cobra Grow Nest por gestionar Meta Ads?", "Depende de los mercados, las campañas y las creatividades que necesites. Te damos un precio cerrado después de la auditoría."),
@@ -272,7 +274,7 @@ HOME_FAQ = [
 HOME = {
     "path": "/", "file": "index.html",
     "title": "Agencia Facebook y Meta Ads para Ecommerce | Grow Nest",
-    "desc": "Agencia de Facebook e Instagram Ads para tiendas online. Campañas que venden, medidas con los pedidos reales de tu tienda. Pide tu propuesta.",
+    "desc": "Agencia de Facebook y Meta Ads para ecommerce. De la web a las ventas: tienda, Meta Ads, Google Ads, optimización de páginas y envíos en un solo equipo.",
     "service": "Gestión de publicidad en Facebook e Instagram (Meta Ads) para ecommerce",
     "faq": HOME_FAQ,
 }
@@ -285,12 +287,19 @@ def build_home():
              ("Lanzamiento", "Montamos campañas, creatividades y medición, y lo revisamos todo antes de publicar."),
              ("Optimización", "Revisión semanal, avisos por WhatsApp e informe mensual. Escalamos lo que funciona.")]
     steps_html = "".join(f'<li><span class="n">0{i}</span><h3>{e(t)}</h3><p>{e(d)}</p></li>' for i, (t, d) in enumerate(steps, 1))
-    why = [("team", "Un solo equipo", "Anuncios, tienda, automatización y envíos bajo el mismo techo. Nada se pierde entre agencias."),
+    why = [("team", "De la web a las ventas", "Tienda, Meta Ads, Google Ads, optimización de páginas y envíos en el mismo equipo. Nada se pierde entre agencias."),
            ("tool", "Construimos, no solo aconsejamos", "Si falta una herramienta, la programamos."),
            ("chart", "Datos en los que confiar", "Primero arreglamos la medición. Después leemos los resultados en los pedidos de tu tienda."),
            ("lock", "Tus cuentas son tuyas", "Trabajamos con acceso de colaborador y de partner.")]
     why_html = "".join(f'<li>{icon(i)}<div><h3>{e(t)}</h3><p>{e(d)}</p></div></li>' for i, t, d in why)
     meta_items = ["Estrategia por país, producto y margen", "Campañas de captación, catálogo dinámico y retargeting", "Creatividades: imágenes y vídeos cortos de producto", "Píxel de Meta y API de Conversiones bien configurados", "Catálogo de productos sincronizado con tu tienda", "Pruebas A/B de anuncios y audiencias", "Informe mensual claro y avisos por WhatsApp"]
+    jsteps = [("bag", "Web y tienda", "Creamos o mejoramos tu tienda Shopify para que venda en el móvil."),
+              ("megaphone", "Meta Ads", "Campañas en Facebook e Instagram que crean demanda."),
+              ("search", "Google Ads", "Google Shopping y Búsqueda para quien ya busca tu producto."),
+              ("tool", "Optimización de páginas", "Fichas, landing pages y checkout que convierten más visitas en pedidos."),
+              ("chart", "Medición", "Píxel, API de Conversiones y GA4 que cuentan las ventas reales."),
+              ("chat", "Venta y recompra", "WhatsApp, email y envíos para que el pedido llegue y el cliente vuelva.")]
+    journey_html = "".join(f'<li><span class="ico">{icon(i)}</span><h3>{e(t)}</h3><p>{e(d)}</p></li>' for i, t, d in jsteps)
     platforms = ["Meta Ads", "Google Ads", "Shopify", "Klaviyo", "WhatsApp Business API", "TikTok Shop", "Amazon", "GA4"]
     chips = "".join(f"<li>{e(m)}</li>" for m in MARKETS)
     body = f"""{header(p)}
@@ -298,9 +307,9 @@ def build_home():
 <section class="hero" data-field-host aria-labelledby="h1">
   <div class="wrap">
     <div class="hero-copy">
-      <p class="label">Agencia Meta Ads · Ecommerce</p>
+      <p class="label">Performance marketing · Ecommerce</p>
       <h1 id="h1">Agencia de Facebook y Meta Ads <span class="grad-text">para ecommerce</span></h1>
-      <p class="lead">Campañas en Facebook e Instagram que venden, medidas con los pedidos reales de tu tienda. Y todo lo que hay detrás: Shopify, WhatsApp, email y envíos.</p>
+      <p class="lead">De la web a las ventas, nos encargamos de todo: creamos tu tienda, lanzamos Meta Ads y Google Ads, optimizamos cada página y cuidamos lo que pasa después del clic.</p>
       <div class="actions">
         <a class="btn btn-primary" href="#contacto">Pide tu propuesta {icon('arrow')}</a>
         <a class="btn btn-light" href="{WA}" target="_blank" rel="noopener">{icon('chat')} Escríbenos por WhatsApp</a>
@@ -313,12 +322,18 @@ def build_home():
 <section class="platforms" aria-label="Plataformas">
   <div class="wrap"><p>Plataformas con las que trabajamos a diario</p><ul>{''.join(f'<li>{e(x)}</li>' for x in platforms)}</ul></div>
 </section>
+<section class="section soft" id="performance" aria-labelledby="perf-title">
+  <div class="wrap">
+    <div class="section-head"><p class="label">Performance marketing</p><h2 id="perf-title">De la web a las ventas, nos encargamos de todo</h2><p class="lead">No solo lanzamos anuncios. Creamos tu tienda, le llevamos tráfico con Meta Ads y Google Ads, optimizamos cada página y cuidamos lo que pasa después de la compra. Un solo equipo, de principio a fin.</p></div>
+    <ol class="journey">{journey_html}</ol>
+  </div>
+</section>
 <section class="section" id="meta-ads" aria-labelledby="meta-title">
   <div class="wrap split">
     <div>
       <p class="label">Meta Ads</p>
       <h2 id="meta-title">Facebook e Instagram Ads que venden</h2>
-      <p class="lead">Somos una agencia de Meta Ads especializada en tiendas online. Creamos, lanzamos y optimizamos tus campañas de Facebook e Instagram cada semana. Medimos cada euro con los pedidos de tu tienda, no con las estimaciones de la plataforma.</p>
+      <p class="lead">Somos una agencia de Meta Ads especializada en tiendas online. Creamos, lanzamos y optimizamos tus campañas de Facebook e Instagram cada semana. Medimos cada euro con los pedidos de tu tienda, no con las estimaciones de la plataforma. Y si lo que frena las ventas no es el anuncio sino la página, el checkout o el envío, también lo arreglamos.</p>
       <h3 style="margin-top:28px">Qué incluye la gestión de Meta Ads</h3>
       {checks(meta_items)}
       <a class="more-link" href="#contacto">Pide tu propuesta de Meta Ads {icon('arrow')}</a>
@@ -393,11 +408,11 @@ PAGES = [
     {
         "path": "/agencia-shopify/", "crumb": "Agencia Shopify", "shape": "bag", "service": "Desarrollo de tiendas Shopify y Shopify B2B",
         "title": "Agencia Shopify en España: Tiendas y B2B | Grow Nest",
-        "desc": "Creamos tiendas Shopify rápidas y vendemos al por mayor desde la misma tienda con Shopify B2B nativo.",
+        "desc": "Creamos tiendas Shopify rápidas, optimizamos cada página para convertir y montamos venta al por mayor con Shopify B2B nativo.",
         "label": "Shopify", "h1": "Agencia Shopify en España: tiendas y B2B",
         "intro": "Creamos y mejoramos tiendas Shopify rápidas que venden en el móvil. Y si vendes al por mayor, lo montamos con Shopify B2B nativo, en la misma tienda y sin apps extra.",
         "blocks": [
-            {"h2": "Desarrollo de tiendas Shopify", "items": ["Tiendas nuevas y rediseños", "Temas y secciones a medida en Liquid", "Mercados, monedas, impuestos y zonas de envío", "Google Merchant Center y feeds de producto", "Shopify Flow, formularios y facturas con Order Printer", "Velocidad, móvil y checkout"]},
+            {"h2": "Desarrollo de tiendas Shopify", "items": ["Tiendas nuevas y rediseños", "Temas y secciones a medida en Liquid", "Mercados, monedas, impuestos y zonas de envío", "Google Merchant Center y feeds de producto", "Shopify Flow, formularios y facturas con Order Printer", "Velocidad, móvil y checkout", "Optimización de fichas de producto y landing pages para convertir más visitas en pedidos"]},
             {"h2": "Shopify B2B para vender al por mayor", "items": ["Cuentas de empresa, listas de precios y precios por cantidad", "Productos solo para mayoristas y envíos B2B propios", "Landing de mayoristas que capta clientes profesionales", "CRM de leads con seguimiento por WhatsApp y email"]},
         ],
         "faq": [("¿Shopify sirve para vender al por mayor?", "Sí. Shopify B2B permite cuentas de empresa, precios propios y pedidos por volumen sin abrir una segunda tienda."),
@@ -536,9 +551,9 @@ def build_service(p):
 ABOUT = {
     "path": "/sobre-nosotros/", "crumb": "Sobre nosotros", "shape": "nest", "pagetype": "AboutPage",
     "title": "Sobre Grow Nest: Agencia de Marketing para Ecommerce",
-    "desc": "Un equipo para la tienda, los anuncios, la automatización y los envíos de tu marca.",
+    "desc": "Agencia de performance marketing para ecommerce. De la web a las ventas: tienda, Meta Ads, Google Ads, optimización de páginas y envíos.",
     "label": "Sobre nosotros", "h1": "Sobre Grow Nest",
-    "intro": "Grow Nest es una agencia de marketing digital para ecommerce. Un solo equipo para los anuncios, la tienda, la automatización y los envíos de tu marca.",
+    "intro": "Grow Nest es una agencia de performance marketing para ecommerce. Nos encargamos de todo, de la web a las ventas: creamos tu tienda, lanzamos Meta Ads y Google Ads, optimizamos las páginas y cuidamos los envíos.",
     "cta": "Pide tu propuesta",
 }
 def build_about():
