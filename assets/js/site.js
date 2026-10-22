@@ -1,5 +1,17 @@
 /* Grow Nest site behaviour: mobile menu, header shadow, contact form, copy buttons. */
 (() => {
+  const EN = (document.documentElement.lang || '').toLowerCase().startsWith('en');
+  const T = EN ? {
+    copied: 'Copied', selected: 'Selected', name: 'Please enter your name.', email: 'Check your email: it looks incomplete.',
+    msg: 'Tell us in one line what you need.', sending: 'Sending…', none: 'Not specified',
+    ok: 'Thank you. We have received your message and will reply soon.', err: "We couldn't send it. Check your email or message us on WhatsApp.",
+    subject: 'New enquiry from grownest.pro (EN)'
+  } : {
+    copied: 'Copiado', selected: 'Seleccionado', name: 'Escribe tu nombre.', email: 'Revisa tu email: parece incompleto.',
+    msg: 'Cuéntanos en una línea qué necesitas.', sending: 'Enviando…', none: 'Sin indicar',
+    ok: 'Gracias. Hemos recibido tu mensaje y te responderemos pronto.', err: 'No se ha podido enviar. Revisa tu email o escríbenos por WhatsApp.',
+    subject: 'Nueva solicitud desde grownest.pro'
+  };
   const header = document.querySelector('.site-header');
   const onScroll = () => header && header.classList.toggle('is-scrolled', window.scrollY > 8);
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
@@ -23,9 +35,9 @@
         const el = document.getElementById(b.getAttribute('aria-controls'));
         if (!el) return;
         const r = document.createRange(); r.selectNodeContents(el);
-        const s = getSelection(); s.removeAllRanges(); s.addRange(r); done('Seleccionado');
+        const s = getSelection(); s.removeAllRanges(); s.addRange(r); done(T.selected);
       };
-      try { navigator.clipboard.writeText(b.dataset.copy).then(() => done('Copiado'), fallback); } catch (e) { fallback(); }
+      try { navigator.clipboard.writeText(b.dataset.copy).then(() => done(T.copied), fallback); } catch (e) { fallback(); }
     });
   });
 
@@ -38,24 +50,24 @@
       e.preventDefault();
       if (form.querySelector('[name="_honey"]').value) return;
       const data = Object.fromEntries(new FormData(form).entries());
-      data.servicios = [...form.querySelectorAll('input[name="servicio"]:checked')].map(i => i.value).join(', ') || 'Sin indicar';
+      data.servicios = [...form.querySelectorAll('input[name="servicio"]:checked')].map(i => i.value).join(', ') || T.none;
       delete data.servicio;
       const email = (data.email || '').trim();
-      if (!data.nombre || !data.nombre.trim()) { say('Escribe tu nombre.', 'error'); form.nombre.focus(); return; }
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { say('Revisa tu email: parece incompleto.', 'error'); form.email.focus(); return; }
-      if (!data.mensaje || !data.mensaje.trim()) { say('Cuéntanos en una línea qué necesitas.', 'error'); form.mensaje.focus(); return; }
-      submit.disabled = true; say('Enviando…', 'info');
+      if (!data.nombre || !data.nombre.trim()) { say(T.name, 'error'); form.nombre.focus(); return; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { say(T.email, 'error'); form.email.focus(); return; }
+      if (!data.mensaje || !data.mensaje.trim()) { say(T.msg, 'error'); form.mensaje.focus(); return; }
+      submit.disabled = true; say(T.sending, 'info');
       try {
         const res = await fetch('https://formsubmit.co/ajax/connect.grownest@gmail.com', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({ ...data, _subject: 'Nueva solicitud desde grownest.pro', _template: 'table', pagina: location.pathname })
+          body: JSON.stringify({ ...data, _subject: T.subject, _template: 'table', pagina: location.pathname })
         });
         const out = await res.json().catch(() => ({}));
         if (!res.ok || out.success === 'false' || out.success === false) throw new Error('send');
-        form.reset(); say('Gracias. Hemos recibido tu mensaje y te responderemos pronto.', 'ok');
+        form.reset(); say(T.ok, 'ok');
       } catch (err) {
-        say('No se ha podido enviar. Revisa tu email o escríbenos por WhatsApp.', 'error');
+        say(T.err, 'error');
       } finally { submit.disabled = false; }
     });
   });
